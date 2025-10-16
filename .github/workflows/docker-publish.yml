@@ -120,3 +120,12 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+  packages: read      # <-- critical for private repos
+  id-token: write
+  - name: Clean CodeQL temp directories
+  run: rm -rf /home/runner/work/_temp/codeql_databases || true
+  CODEQL_ACTION_DEBUG: true
